@@ -15,7 +15,6 @@ const storage = multer.diskStorage({
     cb(null, newname);
   },
 });
-router.post("/upload-by-link", PlaceController.uploadByLink);
 const upload = multer({ storage: storage });
 router.post("/upload", upload.array("photos", 100), PlaceController.upload);
 router.post("/new", isauth, PlaceController.addPlace);

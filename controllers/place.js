@@ -1,24 +1,6 @@
-const download = require("image-downloader");
 const Place = require("../models/Place");
-const secretKey = "heavySecret";
 const Booking = require("../models/Booking");
-exports.uploadByLink = async (req, res, next) => {
-  const { img } = req.body;
-  console.log(img);
-  const newname = "photo" + Date.now() + ".jpg";
-  console.log(__dirname + "..\\uploads\\" + newname);
-  const options = {
-    url: img,
-    dest: "C:\\Desktop\\mernApps\\HomeAway\\api\\uploads\\" + newname,
-  };
-  try {
-    const fname = await download.image(options);
-    res.json(newname);
-    console.log("saved to ", fname);
-  } catch (e) {
-    console.log("Error downloading file", e);
-  }
-};
+
 exports.upload = async (req, res, next) => {
   console.log("first");
   //   const { file } = req.body;
