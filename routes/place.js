@@ -52,7 +52,7 @@ router.put(
   PlaceController.updatePlace
 );
 router.delete("/:id", isauth, PlaceController.deletePlace);
-router.get("/", isauth, PlaceController.getplaces);
+router.get("/", PlaceController.getplaces);
 router.get("/:id", isauth, PlaceController.getPlace);
 router.post("/booking", isauth, PlaceController.BookPlace);
 
