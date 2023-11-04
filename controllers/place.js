@@ -1,5 +1,6 @@
 const Place = require("../models/Place");
 const Booking = require("../models/Booking");
+const { validationResult } = require("express-validator");
 
 exports.upload = async (req, res, next) => {
   console.log("first");
@@ -58,7 +59,11 @@ exports.addPlace = async (req, res, next) => {
   res.json(doc);
 };
 exports.updatePlace = async (req, res, next) => {
-  console.log("updataed");
+  const err = validationResult(req);
+  if (!err.isEmpty()) {
+    res.status(401).json({ msg: "Fill all details" });
+    return;
+  }
   const {
     title,
     type,

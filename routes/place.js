@@ -3,6 +3,7 @@ const router = express.Router();
 const multer = require("multer");
 const isauth = require("../middleware/is-auth");
 const PlaceController = require("../controllers/place");
+const { body } = require("express-validator");
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
     cb(null, "./uploads");
@@ -18,7 +19,23 @@ const storage = multer.diskStorage({
 const upload = multer({ storage: storage });
 router.post("/upload", upload.array("photos", 100), PlaceController.upload);
 router.post("/new", isauth, PlaceController.addPlace);
-router.put("/new", isauth, PlaceController.updatePlace);
+router.put(
+  "/new",
+  isauth,
+  [
+    body("address").trim().notEmpty(),
+    body("description").trim().notEmpty(),
+    body("checkIn").trim().notEmpty(),
+    body("checkOut").trim().notEmpty(),
+    body("extra").trim().notEmpty(),
+    body("title").trim().notEmpty(),
+    body("addedPhotos").isArray({
+      min: 3,
+    }),
+  ],
+
+  PlaceController.updatePlace
+);
 router.delete("/:id", isauth, PlaceController.deletePlace);
 router.get("/", isauth, PlaceController.getplaces);
 router.get("/:id", isauth, PlaceController.getPlace);
