@@ -14,7 +14,10 @@ exports.getplaces = async (req, res, next) => {
   const { q } = req.query;
   console.log(q);
   if (q === "userPost") {
-    const userId = req.userId;
+    const { token } = req.get("Authorization");
+    const decodedToken = jwt.verify(token, "heavySecret");
+
+    const userId = decodedToken.userId;
     const places = await Place.find({
       owner: userId,
     });
