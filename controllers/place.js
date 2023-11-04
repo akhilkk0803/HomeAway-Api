@@ -1,6 +1,7 @@
 const Place = require("../models/Place");
 const Booking = require("../models/Booking");
 const { validationResult } = require("express-validator");
+const jwt = require("jsonwebtoken");
 
 exports.upload = async (req, res, next) => {
   console.log("first");
