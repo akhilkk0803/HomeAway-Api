@@ -28,6 +28,11 @@ exports.getplaces = async (req, res, next) => {
 exports.addPlace = async (req, res, next) => {
   console.log("first");
   const userId = req.userId;
+  const err = validationResult(req);
+  if (!err.isEmpty()) {
+    res.status(401).json({ msg: "Fill all details" });
+    return;
+  }
   const {
     title,
     type,

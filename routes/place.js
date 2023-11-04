@@ -18,7 +18,22 @@ const storage = multer.diskStorage({
 });
 const upload = multer({ storage: storage });
 router.post("/upload", upload.array("photos", 100), PlaceController.upload);
-router.post("/new", isauth, PlaceController.addPlace);
+router.post(
+  "/new",
+  isauth,
+  [
+    body("address").trim().notEmpty(),
+    body("description").trim().notEmpty(),
+    body("checkIn").trim().notEmpty(),
+    body("checkOut").trim().notEmpty(),
+    body("extra").trim().notEmpty(),
+    body("title").trim().notEmpty(),
+    body("addedPhotos").isArray({
+      min: 3,
+    }),
+  ],
+  PlaceController.addPlace
+);
 router.put(
   "/new",
   isauth,
